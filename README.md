@@ -1,10 +1,12 @@
 # osuKernel
-osu!Kernel is a very very VERY experimental kernel-level tablet driver for rhythm game osu! 
-made purely out of interest, proof of concept project basically. 
-No updates will be done to this repo (maybe).
 
-Confirmed only on a Wacom CTL-472, since i don't have any more tablets their support are experimental
+A very, very, *very* experimental kernel-level tablet driver for osu!  
+Made purely for fun as a proof-of-concept. Updates are unlikely (maybe).
 
-since driver isn't signed by microsoft you'll need to enable test mode in windows
-test sign is still needed
-for now you'll have to figure out build, sign and use on your own
+### Compatibility
+Confirmed working **only on Wacom CTL-472** (I don't have other tablets, so anything else is completely untested).
+
+### Heads up
+- The driver isn't signed by Microsoft, so you'll have to enable Windows **Test Mode**.
+- Test-signing is still required.
+- No guides for now — you'll have to figure out how to build, sign, and run it on your own.
