@@ -1,0 +1,754 @@
+<Window x:Class="osuKernel.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:osuKernel"
+        Title="osu!Kernel"
+        Height="800" Width="1200"
+        MinHeight="700" MinWidth="1040"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource MicaBackgroundBrush}"
+        Foreground="{DynamicResource TextPrimaryBrush}"
+        FontFamily="Segoe UI Variable Text, Segoe UI, sans-serif"
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True">
+
+    <Grid Margin="18">
+        <Grid.RowDefinitions>
+            <!-- Top Header & Navigation -->
+            <RowDefinition Height="Auto" />
+            <!-- Main Content Area (Tab views) -->
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- ================= 1. MD3 Header Bar with Tabs & Status ================= -->
+        <Grid Grid.Row="0" Margin="0,0,0,16">
+            <!-- Brand / Logo (Left aligned) -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Border Width="34" Height="34" CornerRadius="10" Background="{DynamicResource AccentBrush}" Margin="0,0,10,0">
+                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <Rectangle Width="18" Height="12" RadiusX="2" RadiusY="2" Stroke="{DynamicResource OnPrimaryBrush}" StrokeThickness="1.5" />
+                        <Ellipse Width="3.5" Height="3.5" Fill="{DynamicResource OnPrimaryBrush}" HorizontalAlignment="Right" Margin="0,0,3,0" />
+                    </Grid>
+                </Border>
+                <TextBlock Text="osu!Kernel"
+                           FontSize="16" FontWeight="Bold"
+                           FontFamily="Segoe UI Variable Display, Segoe UI, sans-serif"
+                           Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center" />
+                <Border Background="{DynamicResource CardSubtleBrush}" BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="1" CornerRadius="6" Padding="6,2" Margin="8,0,0,0" VerticalAlignment="Center">
+                    <TextBlock Text="v0.1.0-alpha" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource TextSecondaryBrush}" />
+                </Border>
+            </StackPanel>
+
+            <!-- MD3 Navigation Tabs (STRICTLY LOCKED TO WINDOW HORIZONTAL CENTER) -->
+            <Border HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Background="{DynamicResource CardSubtleBrush}" BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="1"
+                    CornerRadius="20" Padding="4">
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton x:Name="TabBtnArea" Style="{StaticResource FluentNavTab}" Content="Area" IsChecked="True" Checked="TabBtn_Checked" />
+                    <RadioButton x:Name="TabBtnDisplay" Style="{StaticResource FluentNavTab}" Content="Performance" Checked="TabBtn_Checked" Margin="4,0,0,0" />
+                    <RadioButton x:Name="TabBtnProfiles" Style="{StaticResource FluentNavTab}" Content="Settings" Checked="TabBtn_Checked" Margin="4,0,0,0" />
+                </StackPanel>
+            </Border>
+
+            <!-- Status Indicators Group (Right aligned) -->
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <!-- Driver Status Pill -->
+                <Border Background="{DynamicResource CardBackgroundBrush}"
+                        BorderBrush="{DynamicResource CardBorderBrush}"
+                        BorderThickness="1" CornerRadius="14" Padding="10,5">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Ellipse x:Name="DriverStatusDot" Width="7" Height="7" Fill="{DynamicResource SuccessGreenBrush}" Margin="0,0,6,0" />
+                        <TextBlock x:Name="DriverStatusText" Text="Driver Active"
+                                   FontSize="11.5" FontWeight="SemiBold"
+                                   Foreground="{DynamicResource TextPrimaryBrush}" />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Grid>
+
+        <!-- ================= 2. TAB 1: TABLET AREA MAPPING ================= -->
+        <Grid x:Name="ViewAreaMapping" Grid.Row="1" Visibility="Visible">
+            <Grid.ColumnDefinitions>
+                <!-- Left: Exact Aspect Ratio Tablet Visualizer -->
+                <ColumnDefinition Width="1.35*" />
+                <!-- Clean Column Separator -->
+                <ColumnDefinition Width="16" />
+                <!-- Right: Controls (Fits with zero scrollbar) -->
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Left Container: Vector Tablet Surface -->
+            <Border Grid.Column="0" Background="{DynamicResource CardBackgroundBrush}" BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="1" CornerRadius="16" Padding="20" ClipToBounds="False">
+                <Viewbox Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center" ClipToBounds="False">
+                    <!-- Physical Chassis Outer Frame -->
+                    <Border Width="820" Height="535"
+                            Background="#131418"
+                            BorderBrush="{DynamicResource CardBorderBrush}"
+                            BorderThickness="1.5"
+                            CornerRadius="20"
+                            ClipToBounds="False"
+                            Padding="30">
+                        <Grid ClipToBounds="False">
+                            <!-- Top Measurement Label -->
+                            <TextBlock Text="152.0 mm" HorizontalAlignment="Center" VerticalAlignment="Top"
+                                       FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextTertiaryBrush}" Margin="0,-20,0,0" />
+
+                            <!-- Left Measurement Label -->
+                            <TextBlock Text="95.0 mm" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                       FontSize="12" FontWeight="SemiBold" Foreground="{DynamicResource TextTertiaryBrush}" Margin="-24,0,0,0">
+                                <TextBlock.LayoutTransform>
+                                    <RotateTransform Angle="-90" />
+                                </TextBlock.LayoutTransform>
+                            </TextBlock>
+
+                            <!-- Active Tablet Surface -->
+                            <Border x:Name="TabletSurfaceBorder"
+                                    Width="760" Height="475"
+                                    Background="#0C0C0F"
+                                    BorderBrush="{DynamicResource CardBorderBrush}"
+                                    BorderThickness="1.5"
+                                    CornerRadius="10"
+                                    ClipToBounds="False">
+                                
+                                <Canvas x:Name="TabletCanvas" Width="760" Height="475"
+                                        Background="Transparent"
+                                        ClipToBounds="False"
+                                        MouseDown="TabletCanvas_MouseDown"
+                                        MouseMove="TabletCanvas_MouseMove"
+                                        MouseUp="TabletCanvas_MouseUp">
+
+                                    <!-- 4 Corner Tick Marks -->
+                                    <Path Stroke="{DynamicResource CardBorderBrush}" StrokeThickness="1.5" Data="M 15,30 L 15,15 L 30,15" />
+                                    <Path Stroke="{DynamicResource CardBorderBrush}" StrokeThickness="1.5" Data="M 745,30 L 745,15 L 730,15" />
+                                    <Path Stroke="{DynamicResource CardBorderBrush}" StrokeThickness="1.5" Data="M 15,445 L 15,460 L 30,460" />
+                                    <Path Stroke="{DynamicResource CardBorderBrush}" StrokeThickness="1.5" Data="M 745,445 L 745,460 L 730,460" />
+
+                                    <!-- Draggable Active Area Rectangle -->
+                                    <Border x:Name="ActiveAreaBorder"
+                                            Background="{DynamicResource AccentSubtleBrush}"
+                                            BorderBrush="{DynamicResource AccentBrush}"
+                                            BorderThickness="2"
+                                            CornerRadius="6"
+                                            Cursor="SizeAll"
+                                            MouseDown="ActiveArea_MouseDown">
+                                        <Grid>
+                                            <!-- Centered Dimensions & Offset Badge -->
+                                            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" IsHitTestVisible="False">
+                                                <Border Background="#E0111318" CornerRadius="8" Padding="10,5" BorderBrush="{DynamicResource CardBorderBrush}" BorderThickness="1">
+                                                    <StackPanel HorizontalAlignment="Center">
+                                                        <TextBlock x:Name="AreaDimsText" Text="152.0 × 95.0 mm"
+                                                                   FontSize="12.5" FontWeight="Bold"
+                                                                   Foreground="{DynamicResource TextPrimaryBrush}" HorizontalAlignment="Center" />
+                                                        <TextBlock x:Name="AreaOffsetsText" Text="X: 76.0 mm | Y: 47.5 mm"
+                                                                   FontSize="10.5" Foreground="{DynamicResource TextSecondaryBrush}"
+                                                                   HorizontalAlignment="Center" Margin="0,1,0,0" />
+                                                    </StackPanel>
+                                                </Border>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+
+                                    <!-- 8 Resize Knobs Container (Sibling on canvas, completely unclipped, ZIndex 100) -->
+                                    <Grid x:Name="AreaHandlesContainer" Panel.ZIndex="100" IsHitTestVisible="True" ClipToBounds="False">
+                                        <!-- 4 Corner Resize Knobs -->
+                                        <Ellipse x:Name="HandleTopLeft" Width="14" Height="14"
+                                                 Fill="{DynamicResource AccentBrush}" Stroke="{DynamicResource OnPrimaryBrush}" StrokeThickness="1.5"
+                                                 HorizontalAlignment="Left" VerticalAlignment="Top" Margin="-7,-7,0,0"
+                                                 Cursor="SizeNWSE" MouseDown="Handle_MouseDown" Tag="TopLeft" />
+
+                                        <Ellipse x:Name="HandleTopRight" Width="14" Height="14"
+                                                 Fill="{DynamicResource AccentBrush}" Stroke="{DynamicResource OnPrimaryBrush}" StrokeThickness="1.5"
+                                                 HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-7,-7,0"
+                                                 Cursor="SizeNESW" MouseDown="Handle_MouseDown" Tag="TopRight" />
+
+                                        <Ellipse x:Name="HandleBottomLeft" Width="14" Height="14"
+                                                 Fill="{DynamicResource AccentBrush}" Stroke="{DynamicResource OnPrimaryBrush}" StrokeThickness="1.5"
+                                                 HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="-7,0,0,-7"
+                                                 Cursor="SizeNESW" MouseDown="Handle_MouseDown" Tag="BottomLeft" />
+
+                                        <Ellipse x:Name="HandleBottomRight" Width="14" Height="14"
+                                                 Fill="{DynamicResource AccentBrush}" Stroke="{DynamicResource OnPrimaryBrush}" StrokeThickness="1.5"
+                                                 HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,-7,-7"
+                                                 Cursor="SizeNWSE" MouseDown="Handle_MouseDown" Tag="BottomRight" />
+
+                                        <!-- 4 Edge Resize Knobs -->
+                                        <Ellipse x:Name="HandleTop" Width="12" Height="12"
+                                                 Fill="{DynamicResource AccentBrush}" Stroke="{DynamicResource OnPrimaryBrush}" StrokeThickness="1.5"
+                                                 HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,-6,0,0"
+                                                 Cursor="SizeNS" MouseDown="Handle_MouseDown" Tag="Top" />
+
+                                        <Ellipse x:Name="HandleBottom" Width="12" Height="12"
+                                                 Fill="{DynamicResource AccentBrush}" Stroke="{DynamicResource OnPrimaryBrush}" StrokeThickness="1.5"
+                                                 HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,-6"
+                                                 Cursor="SizeNS" MouseDown="Handle_MouseDown" Tag="Bottom" />
+
+                                        <Ellipse x:Name="HandleLeft" Width="12" Height="12"
+                                                 Fill="{DynamicResource AccentBrush}" Stroke="{DynamicResource OnPrimaryBrush}" StrokeThickness="1.5"
+                                                 HorizontalAlignment="Left" VerticalAlignment="Center" Margin="-6,0,0,0"
+                                                 Cursor="SizeWE" MouseDown="Handle_MouseDown" Tag="Left" />
+
+                                        <Ellipse x:Name="HandleRight" Width="12" Height="12"
+                                                 Fill="{DynamicResource AccentBrush}" Stroke="{DynamicResource OnPrimaryBrush}" StrokeThickness="1.5"
+                                                 HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,-6,0"
+                                                 Cursor="SizeWE" MouseDown="Handle_MouseDown" Tag="Right" />
+                                    </Grid>
+
+                                    <!-- Live Pen Proximity & Position Tracking Cursor -->
+                                    <Grid x:Name="PenCrosshair" Width="24" Height="24" Visibility="Collapsed" IsHitTestVisible="False">
+                                        <Ellipse Width="24" Height="24" Stroke="{DynamicResource AccentBrush}" StrokeThickness="1.5" />
+                                        <Ellipse Width="4" Height="4" Fill="{DynamicResource AccentBrush}" />
+                                    </Grid>
+                                </Canvas>
+                            </Border>
+                        </Grid>
+                    </Border>
+                </Viewbox>
+            </Border>
+
+            <!-- Right Controls: Unified Full-Height MD3 Card -->
+            <Border Grid.Column="2" Style="{StaticResource FluentCard}" VerticalAlignment="Stretch" Padding="16,14">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <!-- Top: Preset Quick Bar -->
+                        <RowDefinition Height="Auto" />
+                        <!-- Divider Line -->
+                        <RowDefinition Height="Auto" />
+                        <!-- Main: Active Area Geometry & Orientation -->
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Preset Quick Bar -->
+                    <StackPanel Grid.Row="0" Orientation="Vertical">
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Text="Preset" FontSize="13" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}" />
+                            <TextBlock x:Name="TxtPresetModifiedBadge" Text="● Saved" Grid.Column="1"
+                                       FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource SuccessGreenBrush}" />
+                        </Grid>
+
+                        <ComboBox x:Name="CmbQuickPresets" Style="{StaticResource FluentComboBox}" Margin="0,0,0,8"
+                                  SelectionChanged="CmbQuickPresets_SelectionChanged" />
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="8" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Button Content="Save Preset" Style="{StaticResource FluentAccentButton}" Grid.Column="0" Click="BtnQuickSavePreset_Click" />
+                            <Button Content="Manage Profiles" Style="{StaticResource FluentButton}" Grid.Column="2" Click="BtnGoToProfiles_Click" />
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- Divider Line -->
+                    <Rectangle Grid.Row="1" Height="1" Fill="{DynamicResource CardBorderBrush}" Margin="0,12" />
+
+                    <!-- Active Area Geometry & Orientation -->
+                    <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel Orientation="Vertical">
+                            <TextBlock Text="Active Area" FontSize="13" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,10" />
+
+                            <!-- Width and Height (mm) -->
+                            <Grid Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Width (mm)" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,3" />
+                                    <TextBox x:Name="TxtWidthMm" Style="{StaticResource FluentTextBox}" LostFocus="AreaInput_LostFocus" KeyDown="AreaInput_KeyDown" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Height (mm)" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,3" />
+                                    <TextBox x:Name="TxtHeightMm" Style="{StaticResource FluentTextBox}" LostFocus="AreaInput_LostFocus" KeyDown="AreaInput_KeyDown" />
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- Center X and Center Y (mm) -->
+                            <Grid Margin="0,0,0,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="10" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Grid.Column="0">
+                                    <TextBlock Text="Center X (mm)" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,3" />
+                                    <TextBox x:Name="TxtXMm" Style="{StaticResource FluentTextBox}" LostFocus="AreaInput_LostFocus" KeyDown="AreaInput_KeyDown" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="2">
+                                    <TextBlock Text="Center Y (mm)" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,3" />
+                                    <TextBox x:Name="TxtYMm" Style="{StaticResource FluentTextBox}" LostFocus="AreaInput_LostFocus" KeyDown="AreaInput_KeyDown" />
+                                </StackPanel>
+                            </Grid>
+
+                            <!-- Quick Area Actions (Full Area & Center Area) -->
+                            <Grid Margin="0,0,0,12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="8" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Button Content="Full Area" Style="{StaticResource FluentPresetButton}" Grid.Column="0" Click="BtnFullArea_Click" Margin="0" />
+                                <Button Content="Center Area" Style="{StaticResource FluentPresetButton}" Grid.Column="2" Click="BtnCenterArea_Click" Margin="0" />
+                            </Grid>
+
+                            <!-- Orientation / Rotation Section -->
+                            <Grid Margin="0,0,0,6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Rotation" FontSize="11.5" FontWeight="SemiBold" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                                <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBox x:Name="TxtRotation" Text="0" Style="{StaticResource FluentTextBox}"
+                                             Width="52" Height="28" HorizontalContentAlignment="Right" Padding="4,1"
+                                             FontSize="11.5" FontWeight="SemiBold"
+                                             LostFocus="TxtRotation_LostFocus" KeyDown="TxtRotation_KeyDown" />
+                                    <TextBlock Text="°" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}" VerticalAlignment="Center" Margin="3,0,0,0" />
+                                </StackPanel>
+                            </Grid>
+
+                            <Slider x:Name="SliderRotation" Style="{StaticResource FluentSlider}"
+                                    Minimum="-180" Maximum="180" Value="0" SmallChange="1" LargeChange="15"
+                                    ValueChanged="SliderRotation_ValueChanged" Margin="0,0,0,8" />
+
+                            <!-- Quick Angle Chips -->
+                            <Grid Margin="0,0,0,12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="4" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="4" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="4" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="4" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Button Content="-180°" Style="{StaticResource FluentPresetButton}" Grid.Column="0" Click="BtnAngleNeg180_Click" Margin="0" Height="28" FontSize="11" />
+                                <Button Content="-90°" Style="{StaticResource FluentPresetButton}" Grid.Column="2" Click="BtnAngleNeg90_Click" Margin="0" Height="28" FontSize="11" />
+                                <Button Content="0°" Style="{StaticResource FluentPresetButton}" Grid.Column="4" Click="BtnAngle0_Click" Margin="0" Height="28" FontSize="11" />
+                                <Button Content="90°" Style="{StaticResource FluentPresetButton}" Grid.Column="6" Click="BtnAngle90_Click" Margin="0" Height="28" FontSize="11" />
+                                <Button Content="180°" Style="{StaticResource FluentPresetButton}" Grid.Column="8" Click="BtnAngle180_Click" Margin="0" Height="28" FontSize="11" />
+                            </Grid>
+
+                            <!-- Options Separator Line -->
+                            <Rectangle Height="1" Fill="{DynamicResource CardBorderBrush}" Margin="0,0,0,10" />
+
+                            <!-- Lock Aspect Ratio Row -->
+                            <Grid Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <CheckBox x:Name="ChkLockAspect" Content="Lock Aspect Ratio"
+                                          Style="{StaticResource FluentToggleSwitch}"
+                                          Checked="ChkLockAspect_Changed" Unchecked="ChkLockAspect_Changed"
+                                          VerticalAlignment="Center" />
+                                <ComboBox x:Name="CmbAspectRatio" Grid.Column="1" Width="135" Height="32"
+                                          Style="{StaticResource FluentComboBox}"
+                                          SelectionChanged="CmbAspectRatio_SelectionChanged">
+                                    <ComboBoxItem Content="Match Display" Tag="Display" />
+                                    <ComboBoxItem Content="16:9 (Wide)" Tag="16:9" />
+                                    <ComboBoxItem Content="16:10" Tag="16:10" />
+                                    <ComboBoxItem Content="4:3 (osu!)" Tag="4:3" />
+                                    <ComboBoxItem Content="1:1 (Square)" Tag="1:1" />
+                                    <ComboBoxItem Content="Custom..." Tag="Custom" />
+                                </ComboBox>
+                            </Grid>
+
+                            <!-- Custom Aspect Ratio Inputs -->
+                            <Grid x:Name="GridCustomRatio" Visibility="Collapsed" Margin="0,0,0,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="8" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="TxtCustomRatioW" Style="{StaticResource FluentTextBox}" Text="16" Height="28" LostFocus="CustomRatio_LostFocus" KeyDown="CustomRatio_KeyDown" />
+                                <TextBlock Text=":" Grid.Column="1" VerticalAlignment="Center" Margin="6,0" FontSize="13" FontWeight="Bold" Foreground="{DynamicResource TextSecondaryBrush}" />
+                                <TextBox x:Name="TxtCustomRatioH" Grid.Column="2" Style="{StaticResource FluentTextBox}" Text="9" Height="28" LostFocus="CustomRatio_LostFocus" KeyDown="CustomRatio_KeyDown" />
+                                <Button Content="Apply" Grid.Column="4" Style="{StaticResource FluentButton}" Height="28" Padding="12,0" Click="BtnApplyCustomRatio_Click" />
+                            </Grid>
+
+                            <!-- Area Boundary Switches -->
+                            <CheckBox x:Name="ChkAreaClipping" Content="Clip Cursor to Area"
+                                      Style="{StaticResource FluentToggleSwitch}" Margin="0,0,0,8" IsChecked="True"
+                                      Checked="ChkClipping_Changed" Unchecked="ChkClipping_Changed" />
+
+                            <CheckBox x:Name="ChkAreaLimiting" Content="Ignore Outside Area"
+                                      Style="{StaticResource FluentToggleSwitch}" Margin="0,0,0,8"
+                                      Checked="ChkAreaLimiting_Changed" Unchecked="ChkAreaLimiting_Changed" />
+
+                            <!-- Pen Tip Click -->
+                            <CheckBox x:Name="ChkEnableTipClick" Content="Tip Click"
+                                      Style="{StaticResource FluentToggleSwitch}" IsChecked="True"
+                                      Checked="ChkEnableTipClick_Changed" Unchecked="ChkEnableTipClick_Changed" />
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- ================= 2. TAB 2: PERFORMANCE ================= -->
+        <Grid x:Name="ViewDisplayOutput" Grid.Row="1" Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="1.15*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Left: Display Selection (Full-Height Card) -->
+            <Border Grid.Column="0" Style="{StaticResource FluentCard}" VerticalAlignment="Stretch">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Target Display" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,4" />
+                    <TextBlock Text="Select which monitor receives cursor coordinates." FontSize="11" Foreground="{DynamicResource TextTertiaryBrush}" Margin="0,0,0,12" />
+
+                    <TextBlock Text="Connected Displays" FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,4" />
+                    <ComboBox x:Name="CmbMonitors" Style="{StaticResource FluentComboBox}" SelectionChanged="CmbMonitors_SelectionChanged" Margin="0,0,0,12" />
+
+                    <Border Style="{StaticResource FluentInnerCard}" Margin="0,0,0,14">
+                        <StackPanel>
+                            <TextBlock x:Name="ScreenResolutionText" Text="Resolution: 1920 × 1080" FontSize="12.5" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" />
+                            <TextBlock x:Name="ScreenOffsetText" Text="Desktop Offset: (0, 0)" FontSize="11" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,3,0,0" />
+                        </StackPanel>
+                    </Border>
+
+                    <Button Content="Refresh Displays" Style="{StaticResource FluentButton}" HorizontalAlignment="Left" Click="BtnRefreshMonitors_Click" />
+                </StackPanel>
+            </Border>
+
+            <!-- Right: Unified Full-Height MD3 Card for Engine & Filters -->
+            <Border Grid.Column="2" Style="{StaticResource FluentCard}" VerticalAlignment="Stretch" Padding="16,14">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Performance &amp; Engine" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,12" />
+
+                        <!-- Overclock Rate Card -->
+                        <Border Style="{StaticResource FluentInnerCard}" Margin="0,0,0,12">
+                            <StackPanel Orientation="Vertical">
+                                <Grid Margin="0,0,0,8">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Polling Rate" FontSize="12.5" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}" VerticalAlignment="Center" />
+                                    <TextBlock x:Name="TxtActiveRateBadge" Text="Native (Hardware)" FontSize="11" FontWeight="SemiBold" Foreground="{DynamicResource AccentBrush}" VerticalAlignment="Center" Grid.Column="1" />
+                                </Grid>
+
+                                <ComboBox x:Name="CmbOverclockRate" Style="{StaticResource FluentComboBox}" SelectionChanged="CmbOverclockRate_SelectionChanged">
+                                    <ComboBoxItem Content="Native" Tag="0" />
+                                    <ComboBoxItem Content="1000 Hz" Tag="1000" />
+                                    <ComboBoxItem Content="2000 Hz" Tag="2000" />
+                                    <ComboBoxItem Content="4000 Hz" Tag="4000" />
+                                    <ComboBoxItem Content="8000 Hz" Tag="8000" />
+                                    <ComboBoxItem x:Name="CmbItemCustomRate" Content="Custom Rate" Tag="custom" Visibility="Collapsed" />
+                                </ComboBox>
+
+                                <!-- Dev Mode Custom Rate Panel -->
+                                <Border x:Name="PanelDevInterpolation" Visibility="Collapsed" Background="{DynamicResource CardHoverBrush}" CornerRadius="8" Padding="10,8" Margin="0,8,0,0">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="8" />
+                                            <ColumnDefinition Width="90" />
+                                            <ColumnDefinition Width="8" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel VerticalAlignment="Center">
+                                            <TextBlock Text="Custom Rate" FontSize="11.5" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" />
+                                            <TextBlock Text="Manual Hz overclock" FontSize="10" Foreground="{DynamicResource TextTertiaryBrush}" />
+                                        </StackPanel>
+                                        <TextBox x:Name="TxtCustomInterpolation" Grid.Column="2" Style="{StaticResource FluentTextBox}" Height="28"
+                                                 FontSize="11.5" FontWeight="SemiBold" HorizontalContentAlignment="Center"
+                                                 LostFocus="TxtCustomInterpolation_LostFocus" KeyDown="TxtCustomInterpolation_KeyDown" />
+                                        <Button x:Name="BtnApplyCustomInterpolation" Content="Apply" Style="{StaticResource FluentAccentButton}" Grid.Column="4" Height="28" Padding="12,0"
+                                                Click="BtnApplyCustomInterpolation_Click" />
+                                    </Grid>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Cohesive MD3 Filters Card -->
+                        <Border Style="{StaticResource FluentInnerCard}" Margin="0,0,0,12">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="Filters" FontSize="12.5" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,10" />
+
+                                <!-- Sub-card 1: Anti-Chatter Deadzone -->
+                                <Border Background="{DynamicResource CardHoverBrush}" CornerRadius="10" Padding="12,10" Margin="0,0,0,10">
+                                    <StackPanel Orientation="Vertical">
+                                        <Grid Margin="0,0,0,6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <CheckBox x:Name="ChkAntichatter" Content="Anti-Chatter"
+                                                      Style="{StaticResource FluentToggleSwitch}"
+                                                      Checked="ChkAntichatter_Changed" Unchecked="ChkAntichatter_Changed" />
+                                            <TextBlock x:Name="TxtAntichatterVal" Text="0 counts (Off)" Grid.Column="1"
+                                                       FontSize="11.5" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}" VerticalAlignment="Center" />
+                                        </Grid>
+
+                                        <Slider x:Name="SliderAntichatter" Style="{StaticResource FluentSlider}"
+                                                Minimum="0" Maximum="30" SmallChange="1" LargeChange="5" Value="0"
+                                                ValueChanged="SliderAntichatter_ValueChanged" Margin="0,4,0,2" />
+
+                                        <!-- Dev Mode Manual Input -->
+                                        <Grid x:Name="PanelDevAntichatter" Visibility="Collapsed" Margin="0,6,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="65" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="Manual deadzone (raw counts):" FontSize="10.5" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                                            <TextBox x:Name="TxtAntichatterManual" Grid.Column="1" Style="{StaticResource FluentTextBox}" Height="28"
+                                                     FontSize="11" HorizontalContentAlignment="Center"
+                                                     LostFocus="TxtAntichatterManual_LostFocus" KeyDown="TxtAntichatterManual_KeyDown" />
+                                        </Grid>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Sub-card 2: EMA Smoothing -->
+                                <Border Background="{DynamicResource CardHoverBrush}" CornerRadius="10" Padding="12,10" Margin="0,0,0,10">
+                                    <StackPanel Orientation="Vertical">
+                                        <Grid Margin="0,0,0,6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <CheckBox x:Name="ChkSmoothing" Content="EMA Smoothing"
+                                                      Style="{StaticResource FluentToggleSwitch}"
+                                                      Checked="ChkSmoothing_Changed" Unchecked="ChkSmoothing_Changed" />
+                                            <TextBlock x:Name="TxtSmoothingVal" Text="20%" Grid.Column="1"
+                                                       FontSize="11.5" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}" VerticalAlignment="Center" />
+                                        </Grid>
+
+                                        <Slider x:Name="SliderSmoothing" Style="{StaticResource FluentSlider}"
+                                                Minimum="5" Maximum="90" SmallChange="5" LargeChange="10" Value="20"
+                                                ValueChanged="SliderSmoothing_ValueChanged" Margin="0,4,0,2" />
+
+                                        <!-- Dev Mode Manual Input -->
+                                        <Grid x:Name="PanelDevSmoothing" Visibility="Collapsed" Margin="0,6,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="65" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="Manual strength (%):" FontSize="10.5" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                                            <TextBox x:Name="TxtSmoothingManual" Grid.Column="1" Style="{StaticResource FluentTextBox}" Height="28"
+                                                     FontSize="11" HorizontalContentAlignment="Center"
+                                                     LostFocus="TxtSmoothingManual_LostFocus" KeyDown="TxtSmoothingManual_KeyDown" />
+                                        </Grid>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Sub-card 3: Velocity Prediction (Lead Phase) -->
+                                <Border Background="{DynamicResource CardHoverBrush}" CornerRadius="10" Padding="12,10">
+                                    <StackPanel Orientation="Vertical">
+                                        <Grid Margin="0,0,0,6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <CheckBox x:Name="ChkPrediction" Content="Velocity Prediction"
+                                                      Style="{StaticResource FluentToggleSwitch}"
+                                                      Checked="ChkPrediction_Changed" Unchecked="ChkPrediction_Changed" />
+                                            <TextBlock x:Name="TxtPredictionVal" Text="1.5 ms" Grid.Column="1"
+                                                       FontSize="11.5" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}" VerticalAlignment="Center" />
+                                        </Grid>
+
+                                        <Slider x:Name="SliderPrediction" Style="{StaticResource FluentSlider}"
+                                                Minimum="0.5" Maximum="5.0" SmallChange="0.1" LargeChange="0.5" Value="1.5"
+                                                ValueChanged="SliderPrediction_ValueChanged" Margin="0,4,0,2" />
+
+                                        <!-- Dev Mode Manual Input -->
+                                        <Grid x:Name="PanelDevPrediction" Visibility="Collapsed" Margin="0,6,0,0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="65" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="Manual lookahead (ms):" FontSize="10.5" Foreground="{DynamicResource TextSecondaryBrush}" VerticalAlignment="Center" />
+                                            <TextBox x:Name="TxtPredictionManual" Grid.Column="1" Style="{StaticResource FluentTextBox}" Height="28"
+                                                     FontSize="11" HorizontalContentAlignment="Center"
+                                                     LostFocus="TxtPredictionManual_LostFocus" KeyDown="TxtPredictionManual_KeyDown" />
+                                        </Grid>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Kernel Dispatch Mode Card -->
+                        <Border Style="{StaticResource FluentInnerCard}">
+                            <StackPanel Orientation="Vertical">
+                                <CheckBox x:Name="ChkKernelDispatch" Content="Low-Latency Kernel Mode"
+                                          Style="{StaticResource FluentToggleSwitch}" IsChecked="True"
+                                          Checked="ChkKernelDispatch_Changed" Unchecked="ChkKernelDispatch_Changed" Margin="0,0,0,4" />
+                                <TextBlock Text="Direct cursor update pipeline inside the driver for minimal input delay."
+                                           FontSize="10.5" Foreground="{DynamicResource TextTertiaryBrush}" TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+
+        <!-- ================= 3. TAB 3: PROFILES & SETTINGS ================= -->
+        <Grid x:Name="ViewProfilesSettings" Grid.Row="1" Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1.15*" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Left: Profile Manager (Dedicated Single Home for Presets) -->
+            <Border Grid.Column="0" Style="{StaticResource FluentCard}" VerticalAlignment="Stretch">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Profiles" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,12" />
+
+                    <!-- Preset Selector -->
+                    <TextBlock Text="Select Preset" FontSize="11.5" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,0,0,4" />
+                    <ComboBox x:Name="CmbProfiles" Style="{StaticResource FluentComboBox}" Margin="0,0,0,10" SelectionChanged="CmbProfiles_SelectionChanged" />
+
+                    <!-- Selected Preset Summary Details -->
+                    <Border Style="{StaticResource FluentInnerCard}" Margin="0,0,0,12">
+                        <StackPanel>
+                            <Grid Margin="0,0,0,3">
+                                <TextBlock Text="Dimensions:" FontSize="11" Foreground="{DynamicResource TextTertiaryBrush}" />
+                                <TextBlock x:Name="TxtProfileInfoDims" Text="152.0 × 95.0 mm" HorizontalAlignment="Right" FontSize="11.5" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" />
+                            </Grid>
+                            <Grid Margin="0,0,0,3">
+                                <TextBlock Text="Center (X, Y):" FontSize="11" Foreground="{DynamicResource TextTertiaryBrush}" />
+                                <TextBlock x:Name="TxtProfileInfoOffset" Text="76.0, 47.5 mm" HorizontalAlignment="Right" FontSize="11.5" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" />
+                            </Grid>
+                            <Grid Margin="0,0,0,3">
+                                <TextBlock Text="Rotation:" FontSize="11" Foreground="{DynamicResource TextTertiaryBrush}" />
+                                <TextBlock x:Name="TxtProfileInfoRotation" Text="0°" HorizontalAlignment="Right" FontSize="11.5" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" />
+                            </Grid>
+                            <Grid>
+                                <TextBlock Text="Autoload on Boot:" FontSize="11" Foreground="{DynamicResource TextTertiaryBrush}" />
+                                <TextBlock x:Name="TxtProfileInfoAutoload" Text="No" HorizontalAlignment="Right" FontSize="11.5" FontWeight="SemiBold" Foreground="{DynamicResource TextSecondaryBrush}" />
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Profile Actions Row -->
+                    <WrapPanel Orientation="Horizontal" Margin="0,0,0,12">
+                        <Button Content="Load" Style="{StaticResource FluentAccentButton}" Margin="0,0,8,6" Click="BtnLoadSelectedProfile_Click" />
+                        <Button Content="Overwrite" Style="{StaticResource FluentButton}" Margin="0,0,8,6" Click="BtnOverwriteProfile_Click" />
+                        <Button Content="Delete" Style="{StaticResource FluentDangerButton}" Margin="0,0,0,6" Click="BtnDeleteProfile_Click" />
+                    </WrapPanel>
+
+                    <!-- Save As New Profile Input -->
+                    <Border Style="{StaticResource FluentInnerCard}">
+                        <StackPanel>
+                            <TextBlock Text="Save Current as New Preset" FontSize="11.5" FontWeight="SemiBold" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,6" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="8" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="TxtNewProfileName" Style="{StaticResource FluentTextBox}" Text="osu! Custom 85x53" />
+                                <Button Content="Save" Style="{StaticResource FluentAccentButton}" Grid.Column="2" Click="BtnSaveProfile_Click" />
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <Button Content="Open Folder" Style="{StaticResource FluentButton}" HorizontalAlignment="Left" Margin="0,12,0,0" Click="BtnOpenFolder_Click" />
+                </StackPanel>
+            </Border>
+
+            <!-- Right: App Options & Startup Preferences (Logical Order & Full-Height) -->
+            <Border Grid.Column="2" Style="{StaticResource FluentCard}" VerticalAlignment="Stretch">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel Orientation="Vertical">
+                        <TextBlock Text="Settings" FontSize="14" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}" Margin="0,0,0,12" />
+
+                        <!-- 1. System Integration -->
+                        <Border Style="{StaticResource FluentInnerCard}" Margin="0,0,0,10">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="SYSTEM" FontSize="10.5" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,8" />
+                                <CheckBox x:Name="ChkStartWithWindows" Content="Start with Windows"
+                                          Style="{StaticResource FluentToggleSwitch}" IsChecked="False"
+                                          Checked="ChkStartWithWindows_Changed" Unchecked="ChkStartWithWindows_Changed" Margin="0,0,0,8" />
+                                <CheckBox x:Name="ChkMinimizeToTray" Content="Minimize to Tray"
+                                          Style="{StaticResource FluentToggleSwitch}" IsChecked="True" />
+                            </StackPanel>
+                        </Border>
+
+                        <!-- 2. Startup Behavior Preset Mode -->
+                        <Border Style="{StaticResource FluentInnerCard}" Margin="0,0,0,10">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="STARTUP PRESET" FontSize="10.5" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,6" />
+                                <RadioButton x:Name="RadioAutoloadLastSession" Content="Restore last active session"
+                                             Style="{StaticResource FluentRadioButton}"
+                                             IsChecked="True"
+                                             Checked="RadioAutoload_Changed" />
+                                <RadioButton x:Name="RadioAutoloadPreset" Content="Always load designated preset"
+                                             Style="{StaticResource FluentRadioButton}"
+                                             Checked="RadioAutoload_Changed" />
+                            </StackPanel>
+                        </Border>
+
+                        <!-- 3. Tablet Model / Hardware Detection -->
+                        <Border Style="{StaticResource FluentInnerCard}" Margin="0,0,0,10">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="TABLET HARDWARE" FontSize="10.5" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,6" />
+                                <ComboBox x:Name="CmbTabletModel" Style="{StaticResource FluentComboBox}" Height="32" SelectionChanged="CmbTabletModel_SelectionChanged" />
+                                <TextBlock x:Name="TxtDetectedTabletHint" Text="Auto-detected tablet" FontSize="10" Foreground="{DynamicResource TextSecondaryBrush}" Margin="2,5,0,0" />
+                            </StackPanel>
+                        </Border>
+
+                        <!-- 4. Interface Settings -->
+                        <Border Style="{StaticResource FluentInnerCard}" Margin="0,0,0,10">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Text="INTERFACE" FontSize="10.5" FontWeight="Bold" Foreground="{DynamicResource AccentBrush}" Margin="0,0,0,8" />
+                                <CheckBox x:Name="ChkShowAreaHandles" Content="Show Area Handles"
+                                          Style="{StaticResource FluentToggleSwitch}" IsChecked="True"
+                                          Checked="ChkShowAreaHandles_Changed" Unchecked="ChkShowAreaHandles_Changed" Margin="0,0,0,8" />
+                                <CheckBox x:Name="ChkShowPenCursor" Content="Show Pen Tracking Cursor"
+                                          Style="{StaticResource FluentToggleSwitch}" IsChecked="True"
+                                          Checked="ChkShowPenCursor_Changed" Unchecked="ChkShowPenCursor_Changed" />
+                            </StackPanel>
+                        </Border>
+
+                        <!-- 5. Developer Mode (Unconstrained Limits) -->
+                        <Border Style="{StaticResource FluentInnerCard}" Margin="0,0,0,12">
+                            <StackPanel Orientation="Vertical">
+                                <CheckBox x:Name="ChkDevMode" Content="Dev Mode"
+                                          Style="{StaticResource FluentToggleSwitch}" IsChecked="False"
+                                          Checked="ChkDevMode_Changed" Unchecked="ChkDevMode_Changed" Margin="0,0,0,4" />
+                                <TextBlock Text="Removes driver limits for active area, rotation, overclock, and filters."
+                                           FontSize="10.5" Foreground="{DynamicResource WarningAmberBrush}" TextWrapping="Wrap" />
+                            </StackPanel>
+                        </Border>
+
+                        <!-- 6. Actions & About -->
+                        <Grid Margin="0,0,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Border Style="{StaticResource FluentInnerCard}" VerticalAlignment="Center">
+                                <StackPanel>
+                                    <TextBlock Text="osu!Kernel v0.1.0-alpha" FontSize="12" FontWeight="Bold" Foreground="{DynamicResource TextPrimaryBrush}" />
+                                    <TextBlock x:Name="TxtTabletDeviceDesc" Text="One by Wacom (CTL-472)" FontSize="10.5" Foreground="{DynamicResource TextSecondaryBrush}" Margin="0,2,0,0" />
+                                </StackPanel>
+                            </Border>
+                            <Button x:Name="BtnExitApp" Content="Exit" Style="{StaticResource FluentDangerButton}"
+                                    Grid.Column="1" Height="32" Padding="20,0" VerticalAlignment="Center" Margin="12,0,0,0"
+                                    Click="BtnExitApp_Click" />
+                        </Grid>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>

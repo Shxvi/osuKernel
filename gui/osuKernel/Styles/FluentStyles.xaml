@@ -1,0 +1,655 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ================= Material Design 3 (Material You) Base Tokens ================= -->
+    <!-- Initial fallback colors; MaterialColorPalette overrides these at runtime with Windows System Accent -->
+    <Color x:Key="MicaBackgroundColor">#111318</Color>
+    <Color x:Key="CardBackgroundColor">#1C1E24</Color>
+    <Color x:Key="CardSubtleColor">#16181E</Color>
+    <Color x:Key="CardHoverColor">#262830</Color>
+    <Color x:Key="CardBorderColor">#2B2D36</Color>
+    <Color x:Key="OutlineColor">#434651</Color>
+
+    <Color x:Key="AccentColor">#388E3C</Color>
+    <Color x:Key="AccentHoverColor">#4CAF50</Color>
+    <Color x:Key="AccentPressedColor">#2E7D32</Color>
+    <Color x:Key="AccentSubtleColor">#26388E3C</Color>
+    <Color x:Key="AccentGlowColor">#40388E3C</Color>
+    <Color x:Key="PrimaryContainerColor">#232A24</Color>
+    <Color x:Key="OnPrimaryContainerColor">#A5D6A7</Color>
+    <Color x:Key="OnPrimaryColor">#FFFFFF</Color>
+
+    <Color x:Key="SuccessGreenColor">#4ADE80</Color>
+    <Color x:Key="WarningAmberColor">#FBBF24</Color>
+    <Color x:Key="DangerRedColor">#F87171</Color>
+    <Color x:Key="DangerRedHoverColor">#EF4444</Color>
+    <Color x:Key="StarGoldColor">#FBBF24</Color>
+
+    <Color x:Key="TextPrimaryColor">#FAFAFC</Color>
+    <Color x:Key="TextSecondaryColor">#C4C6D0</Color>
+    <Color x:Key="TextTertiaryColor">#8E9099</Color>
+
+    <Color x:Key="ControlFillColor">#22242C</Color>
+    <Color x:Key="ControlFillHoverColor">#2C2F3A</Color>
+    <Color x:Key="ControlFillPressedColor">#1A1C22</Color>
+
+    <!-- Base SolidColorBrushes (Updated dynamically by MaterialColorPalette) -->
+    <SolidColorBrush x:Key="MicaBackgroundBrush" Color="{StaticResource MicaBackgroundColor}" />
+    <SolidColorBrush x:Key="CardBackgroundBrush" Color="{StaticResource CardBackgroundColor}" />
+    <SolidColorBrush x:Key="CardSubtleBrush" Color="{StaticResource CardSubtleColor}" />
+    <SolidColorBrush x:Key="CardHoverBrush" Color="{StaticResource CardHoverColor}" />
+    <SolidColorBrush x:Key="CardBorderBrush" Color="{StaticResource CardBorderColor}" />
+    <SolidColorBrush x:Key="OutlineBrush" Color="{StaticResource OutlineColor}" />
+
+    <SolidColorBrush x:Key="AccentBrush" Color="{StaticResource AccentColor}" />
+    <SolidColorBrush x:Key="AccentHoverBrush" Color="{StaticResource AccentHoverColor}" />
+    <SolidColorBrush x:Key="AccentPressedBrush" Color="{StaticResource AccentPressedColor}" />
+    <SolidColorBrush x:Key="AccentSubtleBrush" Color="{StaticResource AccentSubtleColor}" />
+    <SolidColorBrush x:Key="PrimaryContainerBrush" Color="{StaticResource PrimaryContainerColor}" />
+    <SolidColorBrush x:Key="OnPrimaryContainerBrush" Color="{StaticResource OnPrimaryContainerColor}" />
+    <SolidColorBrush x:Key="OnPrimaryBrush" Color="{StaticResource OnPrimaryColor}" />
+
+    <SolidColorBrush x:Key="SuccessGreenBrush" Color="{StaticResource SuccessGreenColor}" />
+    <SolidColorBrush x:Key="WarningAmberBrush" Color="{StaticResource WarningAmberColor}" />
+    <SolidColorBrush x:Key="DangerRedBrush" Color="{StaticResource DangerRedColor}" />
+    <SolidColorBrush x:Key="DangerRedHoverBrush" Color="{StaticResource DangerRedHoverColor}" />
+    <SolidColorBrush x:Key="StarGoldBrush" Color="{StaticResource StarGoldColor}" />
+
+    <SolidColorBrush x:Key="TextPrimaryBrush" Color="{StaticResource TextPrimaryColor}" />
+    <SolidColorBrush x:Key="TextSecondaryBrush" Color="{StaticResource TextSecondaryColor}" />
+    <SolidColorBrush x:Key="TextTertiaryBrush" Color="{StaticResource TextTertiaryColor}" />
+
+    <SolidColorBrush x:Key="ControlFillBrush" Color="{StaticResource ControlFillColor}" />
+    <SolidColorBrush x:Key="ControlFillHoverBrush" Color="{StaticResource ControlFillHoverColor}" />
+    <SolidColorBrush x:Key="ControlFillPressedBrush" Color="{StaticResource ControlFillPressedColor}" />
+
+    <!-- ================= MD3 Elevated Card ================= -->
+    <Style x:Key="FluentCard" TargetType="Border">
+        <Setter Property="Background" Value="{DynamicResource CardBackgroundBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="16" />
+        <Setter Property="Padding" Value="16" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+    </Style>
+
+    <!-- MD3 Inner Container / Surface Container Low -->
+    <Style x:Key="FluentInnerCard" TargetType="Border">
+        <Setter Property="Background" Value="{DynamicResource CardSubtleBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="Padding" Value="12" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+    </Style>
+
+    <!-- ================= MD3 Outlined / Tonal Button ================= -->
+    <Style x:Key="FluentButton" TargetType="Button">
+        <Setter Property="Background" Value="{DynamicResource ControlFillBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontSize" Value="12.5" />
+        <Setter Property="FontFamily" Value="Segoe UI Variable Text, Segoe UI, sans-serif" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Padding" Value="16,0" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="16"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Margin="{TemplateBinding Padding}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ControlFillHoverBrush}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource OutlineBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ControlFillPressedBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="border" Property="Opacity" Value="0.4" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ================= MD3 Filled Button ================= -->
+    <Style x:Key="FluentAccentButton" TargetType="Button" BasedOn="{StaticResource FluentButton}">
+        <Setter Property="Background" Value="{DynamicResource AccentBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource OnPrimaryBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="0"
+                            CornerRadius="16"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Margin="{TemplateBinding Padding}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource AccentHoverBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource OnPrimaryBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource AccentPressedBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ================= MD3 Danger Button ================= -->
+    <Style x:Key="FluentDangerButton" TargetType="Button" BasedOn="{StaticResource FluentButton}">
+        <Setter Property="Background" Value="#32161A" />
+        <Setter Property="BorderBrush" Value="#552228" />
+        <Setter Property="Foreground" Value="#FCA5A5" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="16"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Margin="{TemplateBinding Padding}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#481C22" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource DangerRedBrush}" />
+                            <Setter Property="Foreground" Value="#FFFFFF" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="#250B0E" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ================= MD3 Assist / Filter Chip ================= -->
+    <Style x:Key="FluentPresetButton" TargetType="Button" BasedOn="{StaticResource FluentButton}">
+        <Setter Property="Background" Value="{DynamicResource CardSubtleBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}" />
+        <Setter Property="FontSize" Value="11.5" />
+        <Setter Property="Padding" Value="12,3" />
+        <Setter Property="Height" Value="28" />
+        <Setter Property="Margin" Value="0,0,6,0" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="1"
+                            CornerRadius="14"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          Margin="{TemplateBinding Padding}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ControlFillHoverBrush}" />
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource OutlineBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="border" Property="Background" Value="{DynamicResource ControlFillPressedBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ================= MD3 Switch (Material 3 Toggle) ================= -->
+    <Style x:Key="FluentToggleSwitch" TargetType="CheckBox">
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+        <Setter Property="FontSize" Value="12.5" />
+        <Setter Property="FontFamily" Value="Segoe UI Variable Text, Segoe UI, sans-serif" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <!-- Stadium Track -->
+                        <Grid Width="44" Height="24" VerticalAlignment="Center" Margin="0,0,10,0">
+                            <Border x:Name="track"
+                                    Width="44" Height="24"
+                                    CornerRadius="12"
+                                    Background="#282A34"
+                                    BorderBrush="{DynamicResource OutlineBrush}"
+                                    BorderThickness="1.5" />
+
+                            <!-- Morphing Circular Thumb -->
+                            <Border x:Name="thumb"
+                                    Width="14" Height="14"
+                                    CornerRadius="7"
+                                    Background="{DynamicResource TextSecondaryBrush}"
+                                    HorizontalAlignment="Left"
+                                    Margin="4,0,0,0" />
+                        </Grid>
+
+                        <ContentPresenter VerticalAlignment="Center" />
+                    </StackPanel>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="track" Property="Background" Value="{DynamicResource AccentBrush}" />
+                            <Setter TargetName="track" Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+                            <Setter TargetName="thumb" Property="Background" Value="{DynamicResource OnPrimaryBrush}" />
+                            <Setter TargetName="thumb" Property="Width" Value="18" />
+                            <Setter TargetName="thumb" Property="Height" Value="18" />
+                            <Setter TargetName="thumb" Property="CornerRadius" Value="9" />
+                            <Setter TargetName="thumb" Property="HorizontalAlignment" Value="Right" />
+                            <Setter TargetName="thumb" Property="Margin" Value="0,0,3,0" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="track" Property="Opacity" Value="0.9" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ================= MD3 CheckBox ================= -->
+    <Style x:Key="FluentCheckBox" TargetType="CheckBox">
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+        <Setter Property="FontSize" Value="12.5" />
+        <Setter Property="FontFamily" Value="Segoe UI Variable Text, Segoe UI, sans-serif" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="CheckBox">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Border x:Name="checkBorder"
+                                Width="18" Height="18"
+                                CornerRadius="4"
+                                Background="Transparent"
+                                BorderBrush="{DynamicResource OutlineBrush}"
+                                BorderThickness="1.5"
+                                VerticalAlignment="Center"
+                                Margin="0,0,8,0">
+                            <Path x:Name="checkMark"
+                                  Data="M 3.5 9 L 7 12.5 L 14.5 5"
+                                  Stroke="{DynamicResource OnPrimaryBrush}"
+                                  StrokeThickness="2"
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round"
+                                  StrokeLineJoin="Round"
+                                  Opacity="0"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center" />
+                        </Border>
+                        <ContentPresenter VerticalAlignment="Center" />
+                    </StackPanel>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="checkBorder" Property="Background" Value="{DynamicResource AccentBrush}" />
+                            <Setter TargetName="checkBorder" Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+                            <Setter TargetName="checkMark" Property="Opacity" Value="1" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="checkBorder" Property="BorderBrush" Value="{DynamicResource AccentHoverBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ================= MD3 RadioButton ================= -->
+    <Style x:Key="FluentRadioButton" TargetType="RadioButton">
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontFamily" Value="Segoe UI Variable Text, Segoe UI, sans-serif" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <Grid Width="20" Height="20" VerticalAlignment="Center" Margin="0,0,10,0">
+                            <!-- Outer Ring -->
+                            <Ellipse x:Name="outerRing"
+                                     Width="18" Height="18"
+                                     Stroke="{DynamicResource OutlineBrush}"
+                                     StrokeThickness="2"
+                                     Fill="Transparent" />
+                            <!-- Inner Accent Dot -->
+                            <Ellipse x:Name="innerDot"
+                                     Width="10" Height="10"
+                                     Fill="{DynamicResource AccentBrush}"
+                                     Visibility="Collapsed" />
+                        </Grid>
+                        <ContentPresenter VerticalAlignment="Center" />
+                    </StackPanel>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="outerRing" Property="Stroke" Value="{DynamicResource AccentBrush}" />
+                            <Setter TargetName="innerDot" Property="Visibility" Value="Visible" />
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="outerRing" Property="Stroke" Value="{DynamicResource AccentHoverBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.5" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ================= MD3 Filled Text Field ================= -->
+    <Style x:Key="FluentTextBox" TargetType="TextBox">
+        <Setter Property="Background" Value="{DynamicResource CardSubtleBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontFamily" Value="Segoe UI, sans-serif" />
+        <Setter Property="Padding" Value="10,2" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="CaretBrush" Value="{DynamicResource AccentBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="TextBox">
+                    <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="8"
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="True">
+                        <ScrollViewer x:Name="PART_ContentHost"
+                                      Focusable="False"
+                                      HorizontalScrollBarVisibility="Hidden"
+                                      VerticalScrollBarVisibility="Hidden" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource OutlineBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+                            <Setter TargetName="border" Property="BorderThickness" Value="1.5" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ================= MD3 ComboBox Item ================= -->
+    <Style x:Key="FluentComboBoxItem" TargetType="ComboBoxItem">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+        <Setter Property="FontSize" Value="12.5" />
+        <Setter Property="FontFamily" Value="Segoe UI Variable Text, Segoe UI, sans-serif" />
+        <Setter Property="Padding" Value="12,7" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ComboBoxItem">
+                    <Border x:Name="itemBorder"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="8"
+                            Margin="2,1"
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="itemBorder" Property="Background" Value="{DynamicResource ControlFillHoverBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="itemBorder" Property="Background" Value="{DynamicResource AccentSubtleBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource AccentHoverBrush}" />
+                            <Setter Property="FontWeight" Value="SemiBold" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ComboBox DropDown ToggleButton -->
+    <ControlTemplate x:Key="FluentComboBoxToggleButton" TargetType="ToggleButton">
+        <Border x:Name="toggleBorder"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="{TemplateBinding BorderThickness}"
+                CornerRadius="8"
+                SnapsToDevicePixels="True">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="28" />
+                </Grid.ColumnDefinitions>
+                <!-- Chevron down icon -->
+                <Path Grid.Column="1"
+                      Data="M 0 0 L 4 4 L 8 0"
+                      Stroke="{DynamicResource TextSecondaryBrush}"
+                      StrokeThickness="1.5"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center" />
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="toggleBorder" Property="Background" Value="{DynamicResource ControlFillHoverBrush}" />
+                <Setter TargetName="toggleBorder" Property="BorderBrush" Value="{DynamicResource OutlineBrush}" />
+            </Trigger>
+            <Trigger Property="IsChecked" Value="True">
+                <Setter TargetName="toggleBorder" Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <!-- ================= MD3 ComboBox ================= -->
+    <Style x:Key="FluentComboBox" TargetType="ComboBox">
+        <Setter Property="Background" Value="{DynamicResource CardSubtleBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource CardBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontSize" Value="12.5" />
+        <Setter Property="FontFamily" Value="Segoe UI Variable Text, Segoe UI, sans-serif" />
+        <Setter Property="Padding" Value="12,6" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource FluentComboBoxItem}" />
+        <Setter Property="MaxDropDownHeight" Value="260" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ComboBox">
+                    <Grid>
+                        <!-- Background Toggle Button -->
+                        <ToggleButton x:Name="ToggleButton"
+                                      Template="{StaticResource FluentComboBoxToggleButton}"
+                                      Background="{TemplateBinding Background}"
+                                      BorderBrush="{TemplateBinding BorderBrush}"
+                                      BorderThickness="{TemplateBinding BorderThickness}"
+                                      Focusable="False"
+                                      IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                      ClickMode="Press" />
+
+                        <!-- Selected Content Presenter -->
+                        <ContentPresenter x:Name="ContentSite"
+                                          IsHitTestVisible="False"
+                                          Content="{TemplateBinding SelectionBoxItem}"
+                                          ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                          ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                          Margin="12,0,30,0"
+                                          VerticalAlignment="Center"
+                                          HorizontalAlignment="Left" />
+
+                        <!-- MD3 Pop-up Surface Container -->
+                        <Popup x:Name="Popup"
+                               Placement="Bottom"
+                               IsOpen="{TemplateBinding IsDropDownOpen}"
+                               AllowsTransparency="True"
+                               Focusable="False"
+                               PopupAnimation="Slide">
+                            <Grid x:Name="DropDown"
+                                  SnapsToDevicePixels="True"
+                                  MinWidth="{TemplateBinding ActualWidth}"
+                                  MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                <Border x:Name="DropDownBorder"
+                                        Background="{DynamicResource CardBackgroundBrush}"
+                                        BorderBrush="{DynamicResource CardBorderBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="12"
+                                        Margin="0,4,0,0"
+                                        Padding="4">
+                                    <ScrollViewer SnapsToDevicePixels="True">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Border>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ================= MD3 Slider ================= -->
+    <Style x:Key="FluentSlider" TargetType="Slider">
+        <Setter Property="Background" Value="#252732" />
+        <Setter Property="Foreground" Value="{DynamicResource AccentBrush}" />
+        <Setter Property="Height" Value="26" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Slider">
+                    <Grid VerticalAlignment="Center" SnapsToDevicePixels="True" UseLayoutRounding="True">
+                        <!-- Inactive Pill Track -->
+                        <Border x:Name="inactiveTrack"
+                                Height="6"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="3"
+                                SnapsToDevicePixels="True"
+                                UseLayoutRounding="True" />
+                        <Track x:Name="PART_Track" SnapsToDevicePixels="True" UseLayoutRounding="True">
+                            <Track.DecreaseRepeatButton>
+                                <RepeatButton Command="Slider.DecreaseLarge" Focusable="False">
+                                    <RepeatButton.Template>
+                                        <ControlTemplate TargetType="RepeatButton">
+                                            <Border x:Name="activeTrack" Height="6" Background="{DynamicResource AccentBrush}" CornerRadius="3" SnapsToDevicePixels="True" UseLayoutRounding="True" />
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsEnabled" Value="False">
+                                                    <Setter TargetName="activeTrack" Property="Background" Value="#2A2C38" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </RepeatButton.Template>
+                                </RepeatButton>
+                            </Track.DecreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb Width="20" Height="20" Cursor="Hand" SnapsToDevicePixels="True" UseLayoutRounding="True">
+                                    <Thumb.Template>
+                                        <ControlTemplate TargetType="Thumb">
+                                            <Grid Width="20" Height="20" SnapsToDevicePixels="True" UseLayoutRounding="True">
+                                                <!-- MD3 Hover Halo -->
+                                                <Ellipse x:Name="halo" Width="20" Height="20" Fill="{DynamicResource AccentSubtleBrush}" Opacity="0" />
+                                                <!-- Main Circular Thumb -->
+                                                <Ellipse x:Name="mainThumb" Width="16" Height="16" Fill="{DynamicResource AccentBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" SnapsToDevicePixels="True" />
+                                                <!-- Inner Dot -->
+                                                <Ellipse x:Name="innerDot" Width="6" Height="6" Fill="{DynamicResource OnPrimaryBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" SnapsToDevicePixels="True" />
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="halo" Property="Opacity" Value="1" />
+                                                </Trigger>
+                                                <Trigger Property="IsEnabled" Value="False">
+                                                    <Setter TargetName="mainThumb" Property="Fill" Value="#383A46" />
+                                                    <Setter TargetName="innerDot" Property="Fill" Value="#55596A" />
+                                                    <Setter TargetName="halo" Property="Opacity" Value="0" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Thumb.Template>
+                                </Thumb>
+                            </Track.Thumb>
+                        </Track>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="inactiveTrack" Property="Background" Value="#1B1D25" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- ================= MD3 Navigation Pill Tab ================= -->
+    <Style x:Key="FluentNavTab" TargetType="RadioButton">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource TextSecondaryBrush}" />
+        <Setter Property="FontSize" Value="12.5" />
+        <Setter Property="FontFamily" Value="Segoe UI Variable Text, Segoe UI, sans-serif" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Padding" Value="16,6" />
+        <Setter Property="Height" Value="34" />
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="RadioButton">
+                    <Border x:Name="tabBorder"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="17"
+                            Padding="{TemplateBinding Padding}"
+                            SnapsToDevicePixels="True">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="tabBorder" Property="Background" Value="#14FFFFFF" />
+                            <Setter Property="Foreground" Value="{DynamicResource TextPrimaryBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked" Value="True">
+                            <Setter TargetName="tabBorder" Property="Background" Value="{DynamicResource AccentSubtleBrush}" />
+                            <Setter TargetName="tabBorder" Property="BorderBrush" Value="{DynamicResource AccentBrush}" />
+                            <Setter TargetName="tabBorder" Property="BorderThickness" Value="1" />
+                            <Setter Property="Foreground" Value="{DynamicResource AccentHoverBrush}" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

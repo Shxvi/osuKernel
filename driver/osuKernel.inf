@@ -1,0 +1,170 @@
+;
+; osuKernel Ultra-Low Latency Kernel Driver INF
+; Target Tablets: Wacom One CTL-472, CTL-672, Intuos CTL-4100, CTL-6100, etc.
+;
+
+[Version]
+Signature   = "$WINDOWS NT$"
+Class       = USB
+ClassGuid   = {36fc9e60-c465-11cf-8056-444553540000}
+Provider    = %ManufacturerName%
+CatalogFile = osuKernel.cat
+DriverVer   = 09/20/2026,1.0.0.3
+PnpLockdown = 1
+
+[DestinationDirs]
+DefaultDestDir = 13
+
+[SourceDisksNames]
+1 = %DiskName%,,,""
+
+[SourceDisksFiles]
+osuKernel.sys = 1,,
+
+; ================= Class Installation =================
+
+[Manufacturer]
+%ManufacturerName% = Standard,NTamd64.10.0...16299,NTarm64.10.0...16299
+
+[Standard.NTamd64.10.0...16299]
+; One by Wacom
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_037A
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_037A&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_037B
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_037B&MI_00
+; Intuos 2013 (CTL-480, CTH-480, CTL-680, CTH-680)
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_030E
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_030E&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_030F
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_030F&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0310
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0310&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0311
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0311&MI_00
+; Bamboo & One Gen 1 (CTL-470, CTH-470, CTH-670, CTL-471, CTL-671)
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_00DD
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_00DD&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_00DE
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_00DE&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_00DF
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_00DF&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0300
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0300&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0301
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0301&MI_00
+; Intuos 2015 (CTL-490, CTH-490, CTL-690, CTH-690)
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_033B
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_033B&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_033C
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_033C&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_033D
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_033D&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_033E
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_033E&MI_00
+; Intuos 2018 (CTL-4100, CTL-4100WL, CTL-6100, CTL-6100WL)
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0374
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0374&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0375
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0375&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0377
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0377&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0378
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0378&MI_00
+
+[Standard.NTarm64.10.0...16299]
+; One by Wacom
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_037A
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_037A&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_037B
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_037B&MI_00
+; Intuos 2013 (CTL-480, CTH-480, CTL-680, CTH-680)
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_030E
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_030E&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_030F
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_030F&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0310
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0310&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0311
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0311&MI_00
+; Bamboo & One Gen 1 (CTL-470, CTH-470, CTH-670, CTL-471, CTL-671)
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_00DD
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_00DD&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_00DE
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_00DE&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_00DF
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_00DF&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0300
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0300&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0301
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0301&MI_00
+; Intuos 2015 (CTL-490, CTH-490, CTL-690, CTH-690)
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_033B
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_033B&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_033C
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_033C&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_033D
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_033D&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_033E
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_033E&MI_00
+; Intuos 2018 (CTL-4100, CTL-4100WL, CTL-6100, CTL-6100WL)
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0374
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0374&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0375
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0375&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0377
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0377&MI_00
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0378
+%osuKernel.DeviceDesc% = osuKernel_Device, USB\VID_056A&PID_0378&MI_00
+
+; ================= Device Installation =================
+
+[osuKernel_Device.NT]
+CopyFiles = Drivers_Dir
+AddProperty = osuKernel_Device_Properties
+
+[osuKernel_Device.NT.HW]
+AddProperty = osuKernel_Device_Properties
+
+[Drivers_Dir]
+osuKernel.sys
+
+[osuKernel_Device_Properties]
+; DEVPKEY_Device_Model {78c34fc8-104a-4aca-9ea4-524d52996e57}, 39 (DEVPROP_TYPE_STRING = 18)
+{78c34fc8-104a-4aca-9ea4-524d52996e57}, 39, 18, , "osuKernel"
+; DEVPKEY_DeviceContainer_Category {78c34fc8-104a-4aca-9ea4-524d52996e57}, 90 (DEVPROP_TYPE_STRING_LIST = 0x00002012)
+{78c34fc8-104a-4aca-9ea4-524d52996e57}, 90, 0x00002012, , "Input.Digitizer"
+; DEVPKEY_DeviceContainer_PrimaryCategory {78c34fc8-104a-4aca-9ea4-524d52996e57}, 97 (DEVPROP_TYPE_STRING = 18)
+{78c34fc8-104a-4aca-9ea4-524d52996e57}, 97, 18, , "Input.Digitizer"
+; DEVPKEY_DeviceContainer_Icon {78c34fc8-104a-4aca-9ea4-524d52996e57}, 57 (DEVPROP_TYPE_STRING = 18)
+{78c34fc8-104a-4aca-9ea4-524d52996e57}, 57, 18, , "%%SystemRoot%%\System32\ddores.dll,-505"
+; DEVPKEY_Device_IconPath {a45c254e-df1c-4efd-8020-67d146a850e0}, 4 (DEVPROP_TYPE_STRING = 18)
+{a45c254e-df1c-4efd-8020-67d146a850e0}, 4, 18, , "%%SystemRoot%%\System32\ddores.dll,-505"
+
+; ================= Service Installation =================
+
+[osuKernel_Device.NT.Services]
+AddService = osuKernel,%SPSVCINST_ASSOCSERVICE%,osuKernel_Service_Inst
+
+[osuKernel_Service_Inst]
+DisplayName    = %osuKernel.SVCDESC%
+ServiceType    = 1               ; SERVICE_KERNEL_DRIVER
+StartType      = 3               ; SERVICE_DEMAND_START
+ErrorControl   = 1               ; SERVICE_ERROR_NORMAL
+ServiceBinary  = %13%\osuKernel.sys
+
+; ================= WDF Section =================
+
+[osuKernel_Device.NT.Wdf]
+KmdfService = osuKernel, osuKernel_wdfsect
+
+[osuKernel_wdfsect]
+KmdfLibraryVersion = 1.33
+
+; ================= Strings =================
+
+[Strings]
+SPSVCINST_ASSOCSERVICE = 0x00000002
+ManufacturerName       = "osuKernel Project"
+DiskName               = "osuKernel Driver Installation Disk"
+osuKernel.DeviceDesc   = "osuKernel"
+osuKernel.SVCDESC      = "osuKernel Service"
